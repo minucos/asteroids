@@ -20,7 +20,7 @@ Ship.prototype.draw = function(ctx) {
     let startDeg = 360 - this.heading;
 
     const img = new Image();
-    img.src = "https://raw.githubusercontent.com/minucos/asteroids/master/assets/playerShip1_red.png";
+    img.src = url('../assets/playerShip1_red.png');
     const radian = (startDeg * Math.PI / 180) + (180 * Math.PI / 180);
     ctx.translate(this.pos[0],this.pos[1]);
     ctx.rotate(radian);

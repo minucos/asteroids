@@ -19,7 +19,7 @@ Util.inherits(Asteroid, MovingObject);
 
 Asteroid.prototype.draw = function(ctx) {
     const img = new Image();
-    img.src = "https://raw.githubusercontent.com/minucos/asteroids/master/assets/meteorBrown_big3.png";
+    img.src = url('../assets/meteorBrown_big3.png');
 
     const width = this.radius * 2;
 
