@@ -1,8 +1,30 @@
+body, div, ul, li {
+    font-family: 'Courier New', Courier, monospace;
+    color: #ffffff;
+    background: #000000;
+    margin: 0;
+    padding: 0;
+}
+
 #main {
     display: flex;
     justify-content: center;
 }
 
 #canvas {
+    width: 500px;
+    height: 500px;
+}
+
+#heading {
+    font-size: 30px;
+    text-align: center;
+}
+
+#canvas {
     background-image: url('../assets/topic-space-flight.jpg');
+}
+
+ul {
+    margin-left: 100px;
 }

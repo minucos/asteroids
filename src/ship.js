@@ -12,6 +12,7 @@ function Ship(pos, game) {
         wrappable: true
     })
     this.heading = 180
+    this.powerOn = false;
 }
 
 Util.inherits(Ship, MovingObject);
@@ -27,19 +28,6 @@ Ship.prototype.draw = function(ctx) {
     ctx.drawImage(img, 0 - 12.5,0 - 12.5,25,25);
     ctx.rotate(-radian);
     ctx.translate(-this.pos[0], -this.pos[1]);
-
-    // ctx.fillStyle = this.color;
-    // ctx.beginPath();
-    // ctx.arc(
-    //     this.pos[0],
-    //     this.pos[1],
-    //     this.radius,
-    //     (Math.PI / 180) * startDeg,
-    //     (Math.PI / 180) * endDeg,
-    //     false
-    // );
-
-    // ctx.fill();
 }
 
 Ship.prototype.relocate = function() {
@@ -48,7 +36,7 @@ Ship.prototype.relocate = function() {
 }
 
 Ship.prototype.power = function() {
-    const impulse = Util.getVec(0.2,this.heading)
+    const impulse = Util.getVec(0.1,this.heading)
     this.vel[0] += impulse[0];
     this.vel[1] += impulse[1];
 }
@@ -80,7 +68,8 @@ Ship.prototype.fireBullet = function() {
     let bullet = new Bullet({
         pos: pos,
         vel: vel,
-        game: this.game
+        game: this.game,
+        heading: this.heading
     })
 
     this.game.add(bullet);
