@@ -31,7 +31,7 @@ Ship.prototype.draw = function(ctx) {
 }
 
 Ship.prototype.relocate = function() {
-    this.pos = this.game.randomPosition();
+    this.pos = [0,0];
     this.vel = [0,0];
 }
 
