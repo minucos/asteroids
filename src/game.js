@@ -12,22 +12,25 @@ function Game() {
 
 Game.prototype.addAsteroids = function() {
     for (x = 0; x < Game.NUM_ASTEROIDS; x++ ) {
-        let pos = this.randomPosition()
+        let pos = this.randomPosition('asteroid')
         let asteroid = new Asteroid(pos, this);
 
         this.asteroids.push(asteroid);
     }
 }
 
-Game.prototype.randomPosition = function() {
+Game.prototype.randomPosition = function(str) {
     let x = Math.floor(Math.random() * Game.DIM_X);
-    while (x > Game.DIM_X * 0.25 && x < Game.DIM_X * 0.75) {
-        x = Math.floor(Math.random() * Game.DIM_X);
-    }
-
     let y = Math.floor(Math.random() * Game.DIM_Y);
-    while (y > Game.DIM_Y * 0.25 && y < Game.DIM_Y * 0.75) {
-        y = Math.floor(Math.random() * Game.DIM_Y);
+
+    if ( str == 'asteroid') {
+        while (x > Game.DIM_X * 0.25 && x < Game.DIM_X * 0.75) {
+            x = Math.floor(Math.random() * Game.DIM_X);
+        }
+    
+        while (y > Game.DIM_Y * 0.25 && y < Game.DIM_Y * 0.75) {
+            y = Math.floor(Math.random() * Game.DIM_Y);
+        }
     }
 
     return [x,y];
