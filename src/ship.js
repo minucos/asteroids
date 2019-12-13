@@ -19,13 +19,14 @@ Util.inherits(Ship, MovingObject);
 
 Ship.prototype.draw = function(ctx) {
     let startDeg = 360 - this.heading;
-
     const img = new Image();
-    img.src = 'assets/playerShip1_red.png';
+    img.src = this.powerOn ? 'assets/player_ship_flame.png' : 'assets/player_ship.png';
+    const imgX = 99/3;
+    const imgY = this.powerOn ? 141/3 : 75/3;
     const radian = (startDeg * Math.PI / 180) + (180 * Math.PI / 180);
     ctx.translate(this.pos[0],this.pos[1]);
     ctx.rotate(radian);
-    ctx.drawImage(img, 0 - 12.5,0 - 12.5,25,25);
+    ctx.drawImage(img, 0 - (imgX/2), 0 - (imgY/2), imgX, imgY);
     ctx.rotate(-radian);
     ctx.translate(-this.pos[0], -this.pos[1]);
 }

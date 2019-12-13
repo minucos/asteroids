@@ -27,11 +27,17 @@ GameView.prototype.start = function() {
         if (GameView.KEYS[e.code] && !this.pressedKeys[e.code]) {
             that.keyPress(e.code);
         }
+        if (e.code === 'ArrowUp') {
+            this.game.ship.powerOn = true;
+        }
     });
     document.addEventListener('keyup', (e) => {
         if (GameView.KEYS[e.code] && this.pressedKeys[e.code]) {
             that.keyPress(e.code);
-        } 
+        }
+        if (e.code === 'ArrowUp') {
+            this.game.ship.powerOn = false;
+        }
     });
     document.addEventListener('keypress', (e) => {
         if (e.code == 'Space') that.game.ship.fireBullet();
