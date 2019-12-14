@@ -19,7 +19,7 @@ GameView.KEYS = {
     'ArrowUp': true,
     'ArrowLeft': true,
     'ArrowRight': true,
-}
+};
 
 GameView.prototype.start = function() {
     let that = this;
@@ -37,10 +37,18 @@ GameView.prototype.start = function() {
         }
         if (e.code === 'ArrowUp') {
             this.game.ship.powerOn = false;
+            const sound = document.querySelector('audio[data-name="engine"]');
+            sound.pause();
+            sound.currentTime = 0;
         }
     });
     document.addEventListener('keypress', (e) => {
-        if (e.code == 'Space') that.game.ship.fireBullet();
+        if (e.code == 'Space') {
+            that.game.ship.fireBullet();
+            const sound = document.querySelector('audio[data-name="laser"]');
+            sound.currentTime = 0;
+            sound.play();
+        }
     })
 
     requestAnimationFrame(this.animate.bind(this))
@@ -80,7 +88,11 @@ GameView.prototype.bindKeyHandlers = function() {
 GameView.prototype.actions = function () {
     const ship = this.game.ship;
     const actions = {
-        'ArrowUp': function() { ship.power() },
+        'ArrowUp': function() { 
+            ship.power();
+            const sound = document.querySelector('audio[data-name="engine"]');
+            sound.play();
+        },
         'ArrowLeft': function() { ship.rotateLeft() },
         'ArrowRight': function() { ship.rotateRight() }
     }
@@ -89,4 +101,5 @@ GameView.prototype.actions = function () {
 
     keys.forEach( key => actions[key]() );
 }
+
 module.exports = GameView;

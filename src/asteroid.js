@@ -47,6 +47,9 @@ Asteroid.prototype.collideWith = function (otherObject) {
 
 Asteroid.prototype.split = function() {
     this.game.remove(this);
+    const sound = document.querySelector('audio[data-name="asteroid-explosion"]');
+    sound.currentTime = 0;
+    sound.play();
     if (this.splitCount < 2) {
 
         for (x = 0; x < 2; x++) {

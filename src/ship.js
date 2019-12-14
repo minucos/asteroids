@@ -34,6 +34,9 @@ Ship.prototype.draw = function(ctx) {
 Ship.prototype.relocate = function() {
     this.pos = this.game.randomPosition();
     this.vel = [0,0];
+    const sound = document.querySelector('audio[data-name="ship-explosion"]');
+    sound.currentTime = 0;
+    sound.play();
 }
 
 Ship.prototype.power = function() {
