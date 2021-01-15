@@ -6,5 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const gameview = new GameView(ctx);
 
-    gameview.start()
+    const startButton = document.createElement('div');
+
+    startButton.innerHTML = 'START';
+    startButton.classList.add('game-button');
+
+    document.getElementById('main').appendChild(startButton);
+    // gameview.start()
 })

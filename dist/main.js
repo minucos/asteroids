@@ -137,7 +137,7 @@ eval("const Game = __webpack_require__(/*! ./game */ \"./src/game.js\");\nconst 
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("console.log('webpack is working!');\nconst GameView = __webpack_require__(/*! ./game_view */ \"./src/game_view.js\");\n\ndocument.addEventListener('DOMContentLoaded', () => {\n    const ctx = document.getElementById('canvas').getContext(\"2d\")\n\n    const gameview = new GameView(ctx);\n\n    gameview.start()\n})\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("console.log('webpack is working!');\nconst GameView = __webpack_require__(/*! ./game_view */ \"./src/game_view.js\");\n\ndocument.addEventListener('DOMContentLoaded', () => {\n    const ctx = document.getElementById('canvas').getContext(\"2d\")\n\n    const gameview = new GameView(ctx);\n\n    const startButton = document.createElement('div');\n\n    startButton.innerHTML = 'START';\n    startButton.classList.add('game-button');\n\n    document.getElementById('main').appendChild(startButton);\n    // gameview.start()\n})\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
