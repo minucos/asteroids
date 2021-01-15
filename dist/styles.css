@@ -7,6 +7,7 @@ body, div, ul, li {
 }
 
 #main {
+    position: relative;
     display: flex;
     justify-content: center;
 }
@@ -27,4 +28,24 @@ body, div, ul, li {
 
 ul {
     margin-left: 100px;
+}
+
+#game-button {
+    position: absolute;
+    top: 250px;
+    padding: 10px 50px;
+    border: 1px solid #ffffff;
+    z-index: 100;
+}
+
+.hide-button {
+    display: none;
+}
+
+#mute-button {
+    position: absolute;
+    top: 40px;
+    left: calc(50% + 220px);
+    font-size: 20px;
+    color: #ffffff;
 }

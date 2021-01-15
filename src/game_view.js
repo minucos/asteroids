@@ -1,9 +1,10 @@
 const Game = require('./game');
 const Util = require('./utils');
 
-function GameView(ctx) {
+function GameView(ctx, demo) {
     this.ctx = ctx;
-    this.game = new Game();
+    this.demo = demo
+    this.game = new Game(this.demo);
     this.lastTime = 0;
     this.pressedKeys = {};
 };
@@ -23,33 +24,35 @@ GameView.KEYS = {
 
 GameView.prototype.start = function() {
     let that = this;
-    document.addEventListener('keydown',(e) => {
-        if (GameView.KEYS[e.code] && !this.pressedKeys[e.code]) {
-            that.keyPress(e.code);
-        }
-        if (e.code === 'ArrowUp') {
-            this.game.ship.powerOn = true;
-        }
-    });
-    document.addEventListener('keyup', (e) => {
-        if (GameView.KEYS[e.code] && this.pressedKeys[e.code]) {
-            that.keyPress(e.code);
-        }
-        if (e.code === 'ArrowUp') {
-            this.game.ship.powerOn = false;
-            const sound = document.querySelector('audio[data-name="engine"]');
-            sound.pause();
-            sound.currentTime = 0;
-        }
-    });
-    document.addEventListener('keypress', (e) => {
-        if (e.code == 'Space') {
-            that.game.ship.fireBullet();
-            const sound = document.querySelector('audio[data-name="laser"]');
-            sound.currentTime = 0;
-            sound.play();
-        }
-    })
+    if (!this.demo) {
+        document.addEventListener('keydown',(e) => {
+            if (GameView.KEYS[e.code] && !this.pressedKeys[e.code]) {
+                that.keyPress(e.code);
+            }
+            if (e.code === 'ArrowUp') {
+                this.game.ship.powerOn = true;
+            }
+        });
+        document.addEventListener('keyup', (e) => {
+            if (GameView.KEYS[e.code] && this.pressedKeys[e.code]) {
+                that.keyPress(e.code);
+            }
+            if (e.code === 'ArrowUp') {
+                this.game.ship.powerOn = false;
+                const sound = document.querySelector('audio[data-name="engine"]');
+                sound.pause();
+                sound.currentTime = 0;
+            }
+        });
+        document.addEventListener('keypress', (e) => {
+            if (e.code == 'Space') {
+                that.game.ship.fireBullet();
+                const sound = document.querySelector('audio[data-name="laser"]');
+                sound.currentTime = 0;
+                sound.play();
+            }
+        })
+    }
 
     requestAnimationFrame(this.animate.bind(this))
 };
@@ -61,29 +64,22 @@ GameView.prototype.keyPress = function(key) {
 GameView.prototype.animate = function(current) {
     const delta = current - this.lastTime
     if (this.game.over()) {
+        delete this.game;
         this.game = new Game();
         this.lastTime = 0;
         this.pressedKeys = {};
+    } else {
+        if (!this.demo && Object.keys(this.pressedKeys).length > 0) {
+            this.actions();
+        }
+    
+        requestAnimationFrame(this.animate.bind(this));
+    
+        this.game.step(delta);
+        this.game.draw(this.ctx);
+        this.lastTime = current;
     };
-    if (Object.keys(this.pressedKeys).length > 0) {
-        this.actions();
-    }
-
-    requestAnimationFrame(this.animate.bind(this));
-
-    this.game.step(delta);
-    this.game.draw(this.ctx);
-    this.lastTime = current;
 };
-
-GameView.prototype.bindKeyHandlers = function() {
-    const ship = this.game.ship;
-
-    key('up', function() { ship.power() });
-    key('left', function() { ship.rotateLeft() });
-    key('right', function() { ship.rotateRight() });
-    key('space', function() { ship.fireBullet(); });
-}
 
 GameView.prototype.actions = function () {
     const ship = this.game.ship;

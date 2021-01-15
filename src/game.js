@@ -2,10 +2,11 @@ const Asteroid = require('./asteroid');
 const Ship = require('./ship');
 const Bullet = require('./bullet');
 
-function Game() {
+function Game(demo = false) {
     this.asteroids = [];
     this.bullets = [];
-    this.ship = new Ship([Game.DIM_X / 2, Game.DIM_Y / 2], this);
+    this.demo = demo;
+    this.ship = this.demo ? null : new Ship([Game.DIM_X / 2, Game.DIM_Y / 2], this);
     this.addAsteroids();
     this.lives = ['🚀','🚀','🚀'];
 };
@@ -71,11 +72,25 @@ Game.prototype.over = function() {
     let over = false;
     if (this.asteroids.length == 0) {
         over = true;
-        alert('You Win!');
+        const startButton = document.getElementById('game-button');
+        startButton.classList.remove('hide-button')
+
+        startButton.innerHTML = 'You Won! Click to play again';
+
+        // function startGame(e) {
+        //     e.target.classList.add('hide-button');
+        //     const newGame = new GameView(ctx);
+        //     newGame.start();
+        // };
+
+        // startButton.addEventListener('click', startGame)
     }
     if (this.lives.length == 0) {
         over = true;
-        alert('You Lose!');
+        const startButton = document.getElementById('game-button');
+        startButton.classList.remove('hide-button')
+
+        startButton.innerHTML = 'You Lost! Click to play again';
     }
     return over;
 };
@@ -115,7 +130,12 @@ Game.prototype.remove = function(obj) {
 }
 
 Game.prototype.allObjects = function() {
-    let allObjects = this.asteroids.concat(this.bullets).concat([this.ship]);
+    let allObjects;
+    if (this.demo) {
+        allObjects = this.asteroids;
+    } else {
+        allObjects = this.asteroids.concat(this.bullets).concat([this.ship]);
+    };
 
     return allObjects
 }
